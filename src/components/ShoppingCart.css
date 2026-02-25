@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap');
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
   --cream: #F7F3EE;
   --warm-white: #FDFAF6;
@@ -13,8 +11,6 @@
   --shadow: rgba(42, 36, 32, 0.08);
 }
 
-body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--charcoal); }
-
 .app {
   background-color: var(--cream);
   min-height: 100vh;
@@ -22,9 +18,10 @@ body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--c
   font-family: 'Jost', sans-serif;
 }
 
+/* --- HEADER --- */
 header {
   background: var(--charcoal);
-  padding: 0 40px;
+  padding: 0 5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,6 +29,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
+  width: 100%;
 }
 
 .logo {
@@ -75,11 +73,14 @@ header {
   font-weight: 500;
 }
 
+/* --- MAIN LAYOUT (Stacked) --- */
 .main {
-  display: grid;
-  grid-template-columns: 1fr 400px; /* Grid must have two columns */
-  gap: 40px;
-  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px; /* Space between products and the bag */
+  padding: 40px 5%;
+  max-width: 1400px; /* Prevents it from getting too wide on massive monitors */
+  margin: 0 auto; /* Centers the content */
 }
 
 .section-title {
@@ -98,10 +99,12 @@ header {
   margin-bottom: 32px;
 }
 
+/* --- PRODUCT GRID --- */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
+  /* auto-fit makes the cards fluidly stretch to fill the screen */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
 }
 
 .product-card {
@@ -116,11 +119,11 @@ header {
 .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px var(--shadow); }
 
 .product-img {
-  height: 180px;
+  height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 64px;
+  font-size: 72px;
   transition: transform 0.3s;
 }
 
@@ -185,40 +188,195 @@ header {
   text-transform: uppercase;
   padding: 4px 8px;
   font-weight: 500;
+  z-index: 10;
 }
 
-/* Cart Sidebar */
+/* --- CART SIDEBAR (Placed at the bottom) --- */
 .cart-sidebar {
   background: var(--warm-white);
   border: 1px solid var(--border);
-  position: sticky;
-  top: 112px;
-  max-height: calc(100vh - 152px);
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
-/* ... (Remaining Cart CSS from your original code) ... */
+.cart-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
 
-.toast {
-  position: fixed;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
+.cart-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+}
+
+.cart-count {
+  font-size: 13px;
+  color: var(--stone);
+}
+
+.cart-items {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-empty {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--stone);
+}
+
+.cart-empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+/* --- CART ITEM --- */
+.cart-item {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.cart-item-emoji {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.cart-item-name {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qty-btn {
+  background: none;
+  border: 1px solid var(--border);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--charcoal);
+  transition: all 0.2s;
+}
+
+.qty-btn:hover {
+  border-color: var(--charcoal);
+}
+
+.qty-num {
+  font-size: 14px;
+  min-width: 12px;
+  text-align: center;
+}
+
+.cart-item-price {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--stone);
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.remove-btn:hover {
+  color: #d9534f;
+}
+
+/* --- CART FOOTER --- */
+.cart-footer {
+  padding: 24px;
+  border-top: 1px solid var(--border);
+  background: var(--warm-white);
+}
+
+.cart-summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--stone);
+  margin-bottom: 8px;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 16px 0;
+  color: var(--charcoal);
+}
+
+.checkout-btn {
+  width: 100%;
   background: var(--charcoal);
   color: var(--cream);
-  padding: 12px 28px;
-  font-size: 13px;
+  border: none;
+  padding: 16px;
+  font-size: 14px;
   letter-spacing: 1px;
-  transition: transform 0.3s ease;
-  z-index: 999;
-  white-space: nowrap;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.toast.show { transform: translateX(-50%) translateY(0); }
+.checkout-btn:hover:not(:disabled) {
+  background: var(--gold);
+}
 
-@media (max-width: 900px) {
-  .main { grid-template-columns: 1fr; padding: 24px; }
-  .products-grid { padding-right: 0; margin-bottom: 32px; }
-  .cart-sidebar { position: static; max-height: none; }
+.checkout-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.clear-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--stone);
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+/* --- RESPONSIVENESS (MOBILE TWEAKS) --- */
+@media (max-width: 600px) {
+  .main { padding: 24px 5%; }
+  .cart-item { grid-template-columns: 50px 1fr auto; }
+  .cart-item-emoji { width: 50px; height: 50px; font-size: 24px; }
 }
